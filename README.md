@@ -1,86 +1,122 @@
-# Tetris Game (Unity)
+# Tetris Game
 
-A classic Tetris clone built with Unity using Tilemaps and the Input System. This repository contains the Unity project files and core scripts that implement the falling tetrominoes, grid management, row clearing, and spawning logic.
+A classic Tetris clone built in Unity with Tilemaps and the Input System. This project recreates the core gameplay loop of falling tetrominoes, line clearing, and fast arcade-style decisions in a clean, readable C# codebase.
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Engine-Unity-000000?style=for-the-badge&logo=unity" alt="Unity" />
+  <img src="https://img.shields.io/badge/Language-C%23-239120?style=for-the-badge&logo=csharp" alt="C#" />
+  <img src="https://img.shields.io/badge/Status-Playable-4CAF50?style=for-the-badge" alt="Playable" />
+</p>
+
+## Overview
+
+This repository contains a playable Tetris project using Unity 2D, with a grid-based board, falling pieces, collision detection, and line-clearing logic. The project is intentionally lightweight and structured to be easy to follow, making it a good starting point for learning Unity gameplay systems or expanding with new features.
 
 ## Features
 
-- Playable Tetris gameplay with 7 tetromino types (I, O, T, L, J, S, Z)
-- Tilemap-based board and falling pieces
-- Row detection and clearing
-- Simple AI/scene placeholder: Assets/Tetris_AI.unity
-- Minimal, easy-to-read C# scripts (Grid, Group, Spawner)
+- 7 classic tetromino shapes: I, O, T, L, J, S, and Z
+- Tilemap-based board and falling piece logic
+- Row detection and automatic line clearing
+- Keyboard controls for movement and rotation
+- Clean C# architecture with small, readable gameplay scripts
+- Simple Unity scene setup for quick experimentation
 
-## Stack
+## Tech Stack
 
 - Language: C#
-- Engine / Framework: Unity (2D, Tilemap, Input System, Universal Render Pipeline assets present)
+- Engine: Unity
+- Core systems: Tilemap, Input System, Unity scene workflow
 
-## Getting started
+## Getting Started
 
-Prerequisites
-- Unity Editor (use a recent LTS release). This project uses Unity features such as Tilemaps and the Input System; open the project in an editor that supports those packages.
+### Prerequisites
 
-Quick start
-1. Clone the repository
+- Unity Editor (preferably a recent LTS version)
+- A Unity project setup that supports Tilemaps and the Input System
 
+### Installation
+
+1. Clone the repository:
+
+   ```bash
    git clone https://github.com/ArushiNaik/Tetris-Game.git
+   ```
 
-2. Open Unity Hub and add the cloned folder as a project, or open the project from the Unity Editor.
-3. In the Project window open the scene: Assets/Tetris_AI.unity
-4. Press Play in the Editor to run the game.
+2. Open the cloned folder in Unity Hub or directly in the Unity Editor.
 
-Notes
-- If Unity prompts to upgrade or install packages (Input System, Tilemap, URP), allow it or install the packages via the Package Manager.
+3. Open the scene:
+
+   ```text
+   Assets/Tetris_AI.unity
+   ```
+
+4. Press Play to start the game.
+
+### Notes
+
+- If Unity prompts you to install or upgrade packages such as the Input System or Tilemap support, accept the prompt.
+- Some Unity versions may ask to upgrade the project; this is normal for older Unity projects.
 
 ## Controls
 
-- Left arrow: move piece left
-- Right arrow: move piece right
-- Up arrow: rotate piece
-- Down arrow: soft drop / speed up falling
+- Left Arrow: move left
+- Right Arrow: move right
+- Up Arrow: rotate piece
+- Down Arrow: soft drop / speed up descent
 
-(Controls are defined in Assets/Codes/Group.cs and the input actions asset: Assets/InputSystem_Actions.inputactions)
+Controls are defined in the project scripts and input configuration files, including:
 
-## Key scripts
+- `Assets/Codes/Group.cs`
+- `Assets/InputSystem_Actions.inputactions`
 
-- Assets/Codes/Grid.cs — Grid and locked tilemap management, row detection & clearing
-- Assets/Codes/Group.cs — Tetromino behavior (movement, rotation, locking)
-- Assets/Codes/Spawner.cs — Creates new Tetromino GameObjects and assigns the tile assets
+## Key Scripts
 
-These files are intentionally small and readable; they form the core game loop: Spawner spawns a Group, Group controls the falling piece and locks tiles into Grid.lockedTilemap, and Grid deletes full rows.
+- `Assets/Codes/Grid.cs` — manages the locked board, grid state, and full-row deletion
+- `Assets/Codes/Group.cs` — handles tetromino movement, rotation, and locking behavior
+- `Assets/Codes/Spawner.cs` — spawns tetromino pieces and assigns visuals
 
-## Folder overview
+These scripts form the core gameplay loop: the spawner creates a falling piece, the piece controls movement and rotation, and the grid handles locking and row clearing.
 
+## Project Structure
+
+```text
 Assets/
-  - Codes/        Core game scripts (Grid.cs, Group.cs, Spawner.cs)
-  - Scenes/       Unity scenes (contains Assets/Tetris_AI.unity)
-  - *.prefab      Per-tetromino prefabs and tile assets (colors)
-  - tetrisbrick*  Tile/asset images used by the project
+  Codes/            Core gameplay scripts
+  Scenes/           Unity scenes
+  *.prefab          Tetromino prefabs and tile assets
+  tetrisbrick*      Tile and image assets
+Packages/            Unity package configuration
+ProjectSettings/     Unity project settings
+Tetris.slnx         Generated Unity solution file
+```
 
-ProjectSettings/   Unity project settings
-Packages/          Unity package manifest
-Tetris.slnx        Solution file generated by Unity
+## How It Works
 
-## How it works (brief)
+1. The spawner creates a new falling tetromino object.
+2. The piece chooses a random shape and color, then draws itself on a falling Tilemap.
+3. Player input updates the movement and rotation of the active piece.
+4. When the piece can no longer move downward, it locks into place.
+5. The grid checks for full rows and clears them to keep the game progressing.
 
-1. Spawner creates a new GameObject with a Group component and gives it the falling Tilemap and the tile palette.
-2. Group selects a random tetromino shape and color, draws it on a falling Tilemap, and handles player input for movement and rotation.
-3. When a piece can no longer move down, Group locks its tiles into Grid.lockedTilemap and calls Grid.DeleteFullRows() to clear completed lines and drop rows above.
+## Roadmap
+
+Ideas for future improvements:
+
+- Add score, level progression, and line counter
+- Implement hard drop and hold-piece mechanics
+- Add a next-piece preview
+- Improve UI and visual polish
+- Add sound effects and background music
+- Expand with testing and gameplay balancing
 
 ## Contributing
 
-Contributions are welcome. Suggested improvements:
-- Add scoring, levels, and line counters
-- Implement hard drop, hold piece, and next-piece preview
-- Add sound, polish, and UI
-- Add unit/play tests where appropriate
-
-If you'd like me to open a branch and add an example (for example, scoreboard UI or an MIT license file), tell me which change you want and I can create a PR.
+Contributions are welcome. If you want to improve the project, consider adding gameplay features, smoothing the controls, or refining the Unity project structure.
 
 ## License
 
-No license is included in this repository. If you want to make this project public-friendly, consider adding a license such as the MIT License.
+There is no license file included in this repository yet. If you plan to share or distribute this project publicly, consider adding an open-source license such as the MIT License.
 
 ## Contact
 
-Created by @ArushiNaik — feel free to open issues or PRs for improvements.
+Created by [@ArushiNaik](https://github.com/ArushiNaik). Feel free to open issues or pull requests with suggestions and improvements.
